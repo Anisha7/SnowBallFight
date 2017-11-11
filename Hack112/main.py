@@ -13,4 +13,6 @@ class MyApp(ShowBase):
         self.scene.setScale(0.25, 0.25, 0.25)
         self.scene.setPos(-8, 42, 0)
 
+# hi there
+
 run()
