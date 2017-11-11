@@ -1,2 +1,2 @@
 # SnowBallFight
-Hack112 Project
+Hack112 Project by Deadline Squad
