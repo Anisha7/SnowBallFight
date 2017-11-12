@@ -40,3 +40,8 @@ body {
     cursor: pointer;
 
 }
+
+.ruleList{
+    color: #6528EA;
+    font-size: 22px;
+}
