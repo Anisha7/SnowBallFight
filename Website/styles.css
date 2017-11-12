@@ -1,0 +1,20 @@
+
+h1 {
+
+    margin: 60px;
+}
+
+h2 {
+    text-align: right;
+    padding-right: 100;
+    margin: 150px;
+}
+
+body {
+    background: url(snowman.gif);
+    background-size: 100%;
+}
+
+.buttons{
+    text-align: center;
+}
