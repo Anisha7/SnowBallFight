@@ -36,7 +36,7 @@ def addTitle(text):
                         pos=(-0.1, 0.09), shadow=(0, 0, 0, 1))
 
 
-class RoamingRalphDemo(ShowBase):
+class snowballFight(ShowBase):
     def __init__(self):
         # Set up the window, camera, etc.
         ShowBase.__init__(self)
@@ -93,11 +93,13 @@ class RoamingRalphDemo(ShowBase):
         # My SNOWBALL
         # self.righthand = self.rapl
         self.snowball = loader.loadModel("models/snowball.egg")
-        self.snowball.reparentTo(render)
         self.snowball.setScale(.1)
         self.snowball.setPos(ralphStartPos)
         self.snowballShooted = False
         self.snowballTimer = 0
+        self.snowball.reparentTo(render)
+        #self.rightHand = self.ralph.exposeJoint(None, 'modelRoot', 'RightHand')
+        #self.snowball.reparentTo(self.rightHand)
         
         ########################################################
         # Targets
@@ -377,5 +379,5 @@ class RoamingRalphDemo(ShowBase):
         return task.cont
 
 
-demo = RoamingRalphDemo()
+demo = snowballFight()
 demo.run()
