@@ -93,13 +93,13 @@ class snowballFight(ShowBase):
         # My SNOWBALL
         # self.righthand = self.rapl
         self.snowball = loader.loadModel("models/snowball.egg")
-        self.snowball.setScale(.1)
+        self.snowball.setScale(.5)
         self.snowball.setPos(ralphStartPos)
         self.snowballShooted = False
         self.snowballTimer = 0
-        self.snowball.reparentTo(render)
-        #self.rightHand = self.ralph.exposeJoint(None, 'modelRoot', 'RightHand')
-        #self.snowball.reparentTo(self.rightHand)
+        #self.snowball.reparentTo(render)
+        self.rightHand = self.ralph.exposeJoint(None, 'modelRoot', 'RightHand')
+        self.snowball.reparentTo(self.rightHand)
         
         ########################################################
         # Targets
@@ -110,7 +110,8 @@ class snowballFight(ShowBase):
         self.targets.append(self.coneTarget)
         self.targets.append(self.donutTarget)
         self.targets.append(self.cubeTarget)
-        print(self.targets)
+        ####
+        self.prevH = None
         self.coneTarget.reparentTo(render)
         self.donutTarget.reparentTo(render)
         self.cubeTarget.reparentTo(render)
@@ -252,19 +253,45 @@ class snowballFight(ShowBase):
         if self.keyMap["left"]:
             self.ralph.setH(self.ralph.getH() + 300 * dt)
             if not self.snowballShooted:
-                self.snowball.setH(self.ralph.getH())
+            	self.snowball.setPos(self.rightHand.getPos())
+            	self.snowball.setZ(self.rightHand, 0)
+            	self.snowball.setX(self.rightHand, 0)
+            	self.snowball.setY(self.rightHand, 0)
+                #self.snowball.setX(self.ralph, -1)
+                #self.snowball.setY(self.ralph, 0)
 
         if self.keyMap["right"]:
             self.ralph.setH(self.ralph.getH() - 300 * dt)
             if not self.snowballShooted:
-                self.snowball.setH(self.ralph.getH())
+            	self.snowball.setPos(self.rightHand.getPos())
+            	self.snowball.setZ(self.rightHand, 0)
+                self.snowball.setX(self.rightHand, 0)
+                self.snowball.setY(self.rightHand, 0)
+                #self.snowball.setX(self.ralph, -1)
+                #self.snowball.setY(self.ralph, 0)
+
         if self.keyMap["forward"]:
             self.ralph.setY(self.ralph, -25 * dt)
             if not self.snowballShooted:
-                self.snowball.setPos(self.ralph.getPos())
+            	self.snowball.setPos(self.rightHand.getPos())
+            	self.snowball.setZ(self.rightHand, 0)
+            	self.snowball.setX(self.rightHand, 0)
+            	self.snowball.setY(self.rightHand, 0)
+                #self.snowball.setPos(self.ralph.getPos())
+                #self.snowball.setZ(self.ralph, 2)
+                #self.snowball.setX(self.ralph, -1)
+                #self.snowball.setY(self.ralph, 0)
         
         if self.keyMap["SPACE"]:
             self.snowballShooted = True
+            self.snowball.reparentTo(render)
+            self.snowball.setScale(.1)
+            self.snowball.setZ(self.ralph, 2)
+            self.snowball.setX(self.ralph, -1)
+            self.snowball.setY(self.ralph, 0)
+            self.prevH = self.snowball.getH()
+            self.snowball.setH(self.ralph.getH())
+
 
         if self.snowballShooted:
             self.snowball.setY(self.snowball, -100*dt)
@@ -274,11 +301,15 @@ class snowballFight(ShowBase):
             self.snowballTimer += 1
 
         if self.snowballTimer > 100:
-            self.snowball.setH(self.ralph.getH())
-            self.snowball.setH(self.ralph.getH())
-            self.snowball.setPos(self.ralph.getPos())
             self.snowballShooted = False
             self.snowballTimer = 0
+            self.snowball.setScale(.5)
+            self.snowball.setH(self.prevH)
+            self.snowball.setZ(self.ralph, 2)
+            self.snowball.setX(self.ralph, -1)
+            self.snowball.setY(self.ralph, 0)
+            self.snowball.reparentTo(self.rightHand)
+            
 
         if self.cubeTarget in self.targets and ((self.cubeTarget.getPos() - self.snowball.getPos()).lengthSquared() < 3):
            cubeTargetAlive = False
