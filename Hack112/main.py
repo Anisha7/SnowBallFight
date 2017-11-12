@@ -16,3 +16,5 @@ class MyApp(ShowBase):
 # hi there
 
 run()
+
+# test hi there
