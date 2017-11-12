@@ -293,16 +293,16 @@ class RoamingRalphDemo(ShowBase):
         if self.keyMap["cam-left"]:
             msg = ""
             self.camera.setX(self.camera, -20 * dt)
-            msg = "cameraMovedLeft %d\n" % (-20 * dt)
+            msg = "cameraMovedLeft\n"
             if (msg != ""):
-                print ("sending: ", msg,)
+                print ("sending: ", msg)
                 self.data.server.send(msg.encode())
         elif self.keyMap["cam-right"]:
             msg = ""
             self.camera.setX(self.camera, +20 * dt)
-            msg = "cameraMovedRight %d\n" % (+20 * dt)  #%f?
+            msg = "cameraMovedRight\n"
             if (msg != ""):
-                print ("sending: ", msg,)
+                print ("sending: ", msg)
                 self.data.server.send(msg.encode())
         # save ralph's initial position so that we can restore it,
         # in case he falls off the map or runs into something.
@@ -443,6 +443,7 @@ class RoamingRalphDemo(ShowBase):
                     self.otherStrangersIsMoving[PID] = True
 
             elif (command == "playerRotatedLeft"):
+                print("other player rotated left")
                 PID = msg[1]
                 dtheta = float(msg[2])
                 print(PID, dtheta)
@@ -457,6 +458,7 @@ class RoamingRalphDemo(ShowBase):
                     self.otherStrangersIsMoving[PID] = True
 
             elif (command == "playerRotatedRight"):
+                print("other player rotated right")
                 PID = msg[1]
                 dtheta = float(msg[2])
                 print(PID, dtheta)
@@ -466,14 +468,38 @@ class RoamingRalphDemo(ShowBase):
                 self.otherStrangers[PID].setH(self.otherStrangers[PID].getH()-dtheta)
                 # self.ralph.setY(self.ralph, -25 * dt)
                 print(self.otherStrangers[PID].getH())
-                if self.otherStrangersIsMoving[PID] is False:
+                if not self.otherStrangersIsMoving[PID]:
+                    print("I'm here")
                     self.otherStrangers[PID].loop("run")
                     self.otherStrangersIsMoving[PID] = True
 
-            else:
-                print("no move here")
+            elif (command == "cameraMovedLeft"):
+                print("other player moved camrea left")
                 PID = msg[1]
                 print(PID)
+                print(self.otherStrangersIsMoving[PID])
+                if self.otherStrangersIsMoving[PID]:
+                    print("has successfully resetted it to true")
+                    self.otherStrangers[PID].stop()
+                    self.otherStrangers[PID].pose("walk", 5)
+                    self.otherStrangersIsMoving[PID] = False
+
+            elif (command == "cameraMovedRight"):
+                PID = msg[1]
+                print("other player moved camrea right")
+                print(PID)
+                print(self.otherStrangersIsMoving[PID])
+                if self.otherStrangersIsMoving[PID]:
+                    print("has successfully resetted it to true")
+                    self.otherStrangers[PID].stop()
+                    self.otherStrangers[PID].pose("walk", 5)
+                    self.otherStrangersIsMoving[PID] = False
+
+            else:
+                print("no keyinputs from other player")
+                PID = msg[1]
+                print(PID)
+                print(self.otherStrangersIsMoving[PID])
                 if self.otherStrangersIsMoving[PID]:
                     print("has successfully resetted it to true")
                     self.otherStrangers[PID].stop()
