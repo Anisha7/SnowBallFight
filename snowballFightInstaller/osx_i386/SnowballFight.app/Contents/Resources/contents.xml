@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<contents>
+    <package name="images" per_platform="1" filename="images/images.xml" />
+    <package name="panda3d" version="cmu_1.9" platform="osx_i386" per_platform="1" filename="panda3d/cmu_1.9/osx_i386/panda3d.cmu_1.9.osx_i386.xml" />
+</contents>
