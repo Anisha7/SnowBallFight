@@ -907,7 +907,6 @@ class RoamingRalphDemo(ShowBase):
 
         if self.snowballTimer > 100:
             self.snowball.setH(self.ralph.getH())
-            self.snowball.setH(self.ralph.getH())
             self.snowball.setPos(self.ralph.getPos())
             self.snowballShooted = False
             self.snowballTimer = 0
@@ -1110,19 +1109,24 @@ class RoamingRalphDemo(ShowBase):
                     self.otherStrangers[PID].pose("walk", 5)
                     self.otherStrangersIsMoving[PID] = False
 
+                dt = globalClock.getDt()
+
                 if self.otherStrangersSnowBallShooted[PID]:
                     self.otherStrangersSnowBall[PID].setY(self.otherStrangersSnowBall[PID], -100*dt)
-                    self.otherStrangersSnowBall[PID].setZ(self.self.otherStrangersSnowBall[PID], 5*dt)
+                    self.otherStrangersSnowBall[PID].setZ(self.otherStrangersSnowBall[PID], 5*dt)
 
                 if self.otherStrangersSnowBallShooted[PID] == True:
                     self.otherStrangersSnowballTimer[PID] += 1
 
                 if self.otherStrangersSnowballTimer[PID] > 100:
                     self.otherStrangersSnowBall[PID].setH(self.otherStrangers[PID].getH())
-                    self.otherStrangersSnowBall[PID].setH(self.otherStrangers[PID].getH())
                     self.otherStrangersSnowBall[PID].setPos(self.otherStrangers[PID].getPos())
+                    self.otherStrangersSnowBall[PID].reparentTo(render)
+                    self.otherStrangersSnowBall[PID].setScale(.1)
                     self.otherStrangersSnowBallShooted[PID] = False
                     self.otherStrangersSnowballTimer[PID] = 0
+                    
+
 
             #except:
                 #print("failed
